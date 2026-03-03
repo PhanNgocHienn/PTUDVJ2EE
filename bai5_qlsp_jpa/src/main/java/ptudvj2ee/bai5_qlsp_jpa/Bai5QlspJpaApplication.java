@@ -1,0 +1,13 @@
+package ptudvj2ee.bai5_qlsp_jpa;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class Bai5QlspJpaApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(Bai5QlspJpaApplication.class, args);
+	}
+
+}
