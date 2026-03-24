@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" 
+      th:replace="~{_layout :: dynamicTemplate(~{::#main-section})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Chi Tiết Đơn Hàng</title>
+</head>
+<body>
+    <div id="main-section">
+        <div class="d-flex justify-content-between align-items-center mb-4 mt-4">
+            <h2>Chi Tiết Đơn Hàng #<span th:text="${order.id}"></span></h2>
+            <a th:href="@{/admin/orders}" class="btn btn-secondary">Quay lại danh sách</a>
+        </div>
+        
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">Thông tin khách hàng</div>
+            <div class="card-body">
+                <p class="mb-1"><strong>Tên khách hàng:</strong> <span th:text="${order.customerName}"></span></p>
+                <p class="mb-1"><strong>Số điện thoại:</strong> <span th:text="${order.phone}"></span></p>
+                <p class="mb-1"><strong>Địa chỉ giao:</strong> <span th:text="${order.address}"></span></p>
+                <p class="mb-0"><strong>Ngày đặt hàng:</strong> <span th:text="${#temporals.format(order.orderDate, 'dd-MM-yyyy HH:mm:ss')}"></span></p>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header bg-dark text-white">Danh sách sản phẩm đã mua</div>
+            <div class="card-body p-0">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Sản phẩm</th>
+                            <th>Đơn giá</th>
+                            <th>Số lượng</th>
+                            <th>Thành tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="detail : ${order.orderDetails}">
+                            <td th:text="${detail.product.name}"></td>
+                            <td th:text="${detail.price}"></td>
+                            <td th:text="${detail.quantity}"></td>
+                            <td th:text="${detail.price * detail.quantity}"></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr class="table-secondary">
+                            <th colspan="3" class="text-end">Tổng Cộng:</th>
+                            <th th:text="${order.totalAmount}" class="text-success fs-5"></th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

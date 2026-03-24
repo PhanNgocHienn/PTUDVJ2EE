@@ -37,10 +37,11 @@ public class SecurityConfig {
     // Cấu hình HttpSecurity
   @Bean
 public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http.authorizeHttpRequests(authorize -> authorize
-            .requestMatchers("/products").hasAnyRole("USER", "ADMIN")
-            .requestMatchers("/products/**").hasRole("ADMIN")
-            .anyRequest().authenticated())
+        http.authorizeHttpRequests(authorize -> authorize
+                .requestMatchers("/products").hasAnyAuthority("USER", "ADMIN", "ROLE_USER", "ROLE_ADMIN")
+                .requestMatchers("/products/**", "/admin/**").hasAnyAuthority("ADMIN", "ROLE_ADMIN")
+                .requestMatchers("/cart/**", "/checkout/**").hasAnyAuthority("USER", "ROLE_USER")
+                .anyRequest().authenticated())
         .formLogin(form -> form
             .defaultSuccessUrl("/products", true)
             .permitAll())
